@@ -1,0 +1,25 @@
+Password Generator web app
+
+A simple password generator using node.js.
+See it hosted at https://passwordgenerator.dustyneuron.com
+
+Required server commands:
+pwgen
+sed
+perl
+wc
+
+Required dictionaries (trivially changable):
+/usr/share/dict/american-english
+/usr/share/dict/spanish
+/usr/share/dict/french
+/usr/share/dict/italian
+/usr/share/dict/ngerman
+
+
+Required npm modules:
+express
+fibers (https://github.com/laverdet/node-fibers)
+underscore
+
+

@@ -1,0 +1,24 @@
+<div style="text-align: center; font-family: 'Trebuchet MS', 'Liberation Sans', 'DejaVu Sans', sans-serif;">
+    <% for (var lang_key in languages) { if (languages.hasOwnProperty(lang_key)) {%>
+        <span>---</span>
+        <% if (slug === lang_key) { %>
+            <strong><a href="/<%= lang_key %>/"><%= languages[lang_key]["name"] %></a></strong>
+        <% } else { %>
+            <a href="/<%= lang_key %>/"><%= languages[lang_key]["name"] %></a>
+        <% } %>
+        <span>---</span>
+    <% } } %>
+
+    <h1><%= languages[slug].strings.title %></h1>
+
+    <p><a href="/<%= slug %>/"><%= languages[slug].strings.reload %></a></p>
+
+    <% methods.forEach(function(method, idx) { %>
+        <h3><%= languages[slug].strings.methods[idx] %></h3>
+                
+        <pre><%= method.password_block %></pre>
+
+    <% }); %>
+
+    <!-- <p><small><a href="/about/">about</a></small></p> -->
+</div>
