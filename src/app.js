@@ -18,7 +18,7 @@ var fs = require('fs');
     
     app.set('views', __dirname + '/../views');
     app.engine('html', function(filePath, options, callback) {
-        fs.readFile(filePath, function(err, content) {
+        fs.readFile(filePath, {encoding: 'utf8'}, function(err, content) {
             var compiled = _.template(content);
             return callback(null, compiled(options));
         });
@@ -313,8 +313,12 @@ var fs = require('fs');
                 callback(error);
                 return;
             }
-
-            callback(undefined, parseInt(stdout));
+            
+            var numWords = parseInt(stdout);
+            if (numWords == 0) {
+                return callback("Wordlist empty!");
+            }
+            return callback(undefined, numWords);
         });
     });
     
@@ -364,9 +368,10 @@ var fs = require('fs');
                 }
             }
             
-            app.listen(8005);
+            var listen_port = 8005;
+            app.listen(listen_port);
             
-            console.log(new Date().toString() + ": Listening for connections");
+            console.log(new Date().toString() + ": Listening for connections on port " + listen_port.toString());
         }).run();
     }
     init_app();
