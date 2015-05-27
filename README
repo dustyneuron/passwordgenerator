@@ -1,7 +1,7 @@
 Password Generator web app
 
 A simple password generator using node.js.
-See it hosted at https://passwordgenerator.dustyneuron.com
+See it hosted at http://passwordgenerator.dustyneuron.com
 
 Required server commands:
 pwgen
