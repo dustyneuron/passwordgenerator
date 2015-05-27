@@ -1,4 +1,4 @@
-var express = require('express-unstable');
+var express = require('express');
 var fs = require('fs');
 
 var sys = require("sys");
@@ -9,24 +9,24 @@ var _ = require('underscore');
 var child_process = require('child_process');
 
 var Future = require('fibers/future'), wait = Future.wait;
+var Fiber = require('fibers');
+
+var fs = require('fs');
 
 (function () {
-    var app = express.createServer();
+    var app = express();
     
-    app.configure(function(){
-        app.set('views', __dirname + '/../views');
+    app.set('views', __dirname + '/../views');
+    app.engine('html', function(filePath, options, callback) {
+        fs.readFile(filePath, function(err, content) {
+            var compiled = _.template(content);
+            return callback(null, compiled(options));
+        });
     });
-    app.register('.html', {
-        compile: function(str, options){
-            var compiled = _.template(str);
-            return function(locals) {
-                return compiled(locals);
-            };
-        }
-    });
-
+    app.set('view engine', 'html');
+    
     app.use("/static", express.static(__dirname + '/static'));
-
+    
     var generated_dict_dir ="/tmp/password-generator";
     var default_slug = "en";
     var languages = {
@@ -138,7 +138,9 @@ var Future = require('fibers/future'), wait = Future.wait;
             sed_arg += rand(1, num_words_in_list - 1).toString() + "p;";
         }
         
-        child_process.exec("sed -n '" + sed_arg + "' " + file, function (error, stdout, stderr) {
+        sed_cmd = "sed -n '" + sed_arg + "' " + file;
+        console.log('executing "' + sed_cmd + '"');
+        child_process.exec(sed_cmd, function (error, stdout, stderr) {
             if (error) {
                 callback(error);
                 return;
