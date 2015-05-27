@@ -139,7 +139,7 @@ var fs = require('fs');
         }
         
         sed_cmd = "sed -n '" + sed_arg + "' " + file;
-        console.log('executing "' + sed_cmd + '"');
+        //console.log('executing "' + sed_cmd + '"');
         child_process.exec(sed_cmd, function (error, stdout, stderr) {
             if (error) {
                 callback(error);
